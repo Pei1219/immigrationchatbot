@@ -5,11 +5,9 @@ from default_config import *
 from langchain_community.llms import Ollama
 
 
-"""单例模式，确保全局只有一个Config"""
 class Singleton(type):
     _instance = {}
 
-    # 重写了 __call__ 方法，该方法在类实例化时被调用。
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instance:
             cls._instance[cls] = super(Singleton, cls).__call__(*args, **kwargs)
@@ -18,7 +16,6 @@ class Singleton(type):
 class BaseSingleton(metaclass=Singleton):
     pass
 
-"""基类"""
 class BaseObject(BaseSingleton):
     @classmethod
     def class_name(cls):
@@ -27,7 +24,6 @@ class BaseObject(BaseSingleton):
 
     
 
-"""Config 配置类"""
 class Config(BaseObject):
     def __init__(
         self,
@@ -41,7 +37,6 @@ class Config(BaseObject):
      
     ):
         super().__init__()
-        # 加载配置文件
         load_dotenv('.env')
 
         # LLM Settings

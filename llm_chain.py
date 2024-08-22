@@ -18,8 +18,8 @@ def _combine_documents(docs, document_prompt=DEFAULT_DOCUMENT_PROMPT, document_s
     doc_strings = [format_document(doc, document_prompt) for doc in docs]
     return document_separator.join(doc_strings)
 
-# 初始化配置和设备
-config = Config()  # 确保实例化 Config 类
+
+config = Config()  
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # 初始化 Reranker 和 QueryRewriter
@@ -36,7 +36,7 @@ def get_streaming_chain(question: str, memory, llm, db):
         )),
     )
 
-    # 重写查询
+
     rewritten_question = query_rewriter.rewrite(question)
     logging.info(f"Rewritten Question: {rewritten_question}")
 
@@ -128,7 +128,7 @@ def get_evaluation_chain(llm, db):
 
         context = _combine_documents(docs)
         
-        # 结合检索到的文档和问题生成最终答案
+       
         answer_prompt = EVALUATION_PROMPT.format(context=context, question=rewritten_question)
         answer = llm.invoke(answer_prompt)
         logging.info(f"Generated answer: {answer}")
@@ -150,18 +150,12 @@ def evaluate_predictions(evaluate_fn, test_data: List[Dict]) -> None:
         predictions.append({
             "id": item["id"],
             "question": question,
-            "answer": answer,  # 保存正确答案
-            "predicted": predicted_answer  # 保存模型预测答案
+            "answer": answer, 
+            "predicted": predicted_answer  
         })
     
     # Extract predictions and answers
-    answers = [item['answer'] for item in predictions]  # 提取正确答案
-    predictions_text = [item['predicted'] for item in predictions]  # 提取预测答案
+    answers = [item['answer'] for item in predictions]  
+    predictions_text = [item['predicted'] for item in predictions]  
     
-    # Calculate BLEU and ROUGE scores
-    bleu_score = calculate_bleu([[ans] for ans in answers], [[pred] for pred in predictions_text])
-    logging.info(f"BLEU Score: {bleu_score:.4f}")
-
-    rouge_scores = calculate_rouge(answers, predictions_text)
-    for metric, score in rouge_scores.items():
-        logging.info(f"{metric.upper()} Score: {score:.4f}")
+   

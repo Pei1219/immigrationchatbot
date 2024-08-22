@@ -15,11 +15,7 @@ class Reranker:
         self._rerank_model.eval()
 
         self._rerank_top_k = self._config.rerank_top_k
-        
-    """
-    获取关联信息的相关度，用于评判召回质量
-    https://github.com/FlagOpen/FlagEmbedding/tree/master/FlagEmbedding/reranker
-    """
+    
     def get_reranker_score(self, query: str, reference_results: List[str]):
         """Get reranker score."""
         pairs = []

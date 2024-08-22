@@ -2,17 +2,16 @@ import argparse
 from langchain.prompts.prompt import PromptTemplate
 from langchain_core.prompts import ChatPromptTemplate
 
-# 默认设置
+
 DEFAULT_MODEL = "llama2:7b-chat"
 DEFAULT_EMBEDDING_MODEL = "llama2:7b-chat"
 DEFAULT_PATH = "research"
 DEFAULT_CHUNK_SIZE = 1000
 DEFAULT_CHUNK_OVERLAP = 100
 DEFAULT_NUM_RETRIEVED_DOCS = 9
-DEFAULT_OPENAI_API_KEY = "your-openai-api-key"  # 请确保用实际的 API 密钥替换
-DEFAULT_OPENAI_API_BASE = "https://api.openai.com/v1"  # 替换为正确的 OpenAI API 基础 URL
+DEFAULT_OPENAI_API_BASE = "https://api.openai.com/v1"  
 
-# 提示模板
+
 CONDENSE_QUESTION_TEMPLATE = """Given the following conversation and a follow-up question, rephrase the follow-up question to make it stand alone.
 
 Conversation History:
@@ -60,7 +59,7 @@ If you don’t know the answer, just say “I don’t know” and avoid making u
 ## Answer (step-by-step calculation):
 """
 
-# 创建提示模板对象
+
 CONDENSE_QUESTION_PROMPT = PromptTemplate.from_template(CONDENSE_QUESTION_TEMPLATE)
 ANSWER_PROMPT = ChatPromptTemplate.from_template(ANSWER_TEMPLATE)
 DEFAULT_DOCUMENT_PROMPT = PromptTemplate.from_template(DOCUMENT_TEMPLATE)
